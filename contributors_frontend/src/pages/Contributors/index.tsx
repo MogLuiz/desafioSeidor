@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Table } from 'react-bootstrap'
+import { Table, Button } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
 import api from '../../services/api'
 
 import moment from 'moment'
+import './index.css'
 
 interface IContributors {
     
@@ -19,6 +21,7 @@ interface IContributors {
 const Contributors: React.FC = () => {
 
     const [contributors, setContributors] = useState<IContributors[]>([])
+    const history = useHistory()
 
     useEffect(() => { 
         loadContributors()
@@ -34,10 +37,47 @@ const Contributors: React.FC = () => {
         return moment(date).format("DD/MM/YYYY")
     }
 
+    function newCollaborator () {
+        history.push('/colaboradores_cadastro')
+    }
+
+    function calcDiscount(contributors: IContributors){
+            const descPorDependente = contributors.numDependentes * 164
+            var salBase = contributors.salBruto - contributors.descPrevidencia - descPorDependente
+            
+            if(salBase < 1903){
+                salBase  = 0
+            }
+            if(salBase >= 1903 && salBase < 2826) {
+                salBase  = salBase * 0.075 
+                    
+            } 
+            if(salBase > 2826 && salBase < 3752){
+                salBase  = salBase * 0.15 
+                
+            }
+            if(salBase > 3752 && salBase < 4664){
+                 salBase  = salBase * 0.225 
+                
+            }
+            if(salBase > 4664){
+                 salBase = salBase * 0.275
+                
+            }
+
+            
+            
+            return salBase
+            
+    }
+
     return (
         <div className="container">
             <br/>
-            <h1>Contributors Page</h1>
+            <div className="contributors-header">
+                <h1>Contributors Page</h1>
+                <Button variant="dark" size="sm" onClick={newCollaborator} >Novo Colaborador</Button>
+            </div>
             <br/>
             <Table striped bordered hover>
                 <thead>
@@ -61,8 +101,13 @@ const Contributors: React.FC = () => {
                             <td>{contributors.salBruto}</td>
                             <td></td>
                             <td>{contributors.numDependentes}</td>
-                            <td></td>
-                            <td></td>
+                            <td>{calcDiscount(contributors)}</td>
+                            <td>
+                                <Button size="sm">Editar</Button>{' '}
+                                <Button size="sm" variant="success">Finalizar</Button>{' '}
+                                <Button size="sm" variant="info">Visualizar</Button>{' '}
+                                <Button size="sm" variant="danger">Remove</Button>{' '}
+                            </td>
                             </tr>
                         ))
                     }
