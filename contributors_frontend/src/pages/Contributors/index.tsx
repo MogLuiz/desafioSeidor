@@ -41,6 +41,10 @@ const Contributors: React.FC = () => {
         history.push('/colaboradores_cadastro')
     }
 
+    function editCollaborator(id: number){
+        history.push(`/colaboradores_cadastro/${id}`)
+    }
+
     function calcDiscount(contributors: IContributors){
             const descPorDependente = contributors.numDependentes * 164
             var salBase = contributors.salBruto - contributors.descPrevidencia - descPorDependente
@@ -103,8 +107,7 @@ const Contributors: React.FC = () => {
                             <td>{contributors.numDependentes}</td>
                             <td>{calcDiscount(contributors)}</td>
                             <td>
-                                <Button size="sm">Editar</Button>{' '}
-                                <Button size="sm" variant="success">Finalizar</Button>{' '}
+                                <Button size="sm" onClick={ () => editCollaborator(contributors.id)}>Editar</Button>{' '}
                                 <Button size="sm" variant="info">Visualizar</Button>{' '}
                                 <Button size="sm" variant="danger">Remove</Button>{' '}
                             </td>
