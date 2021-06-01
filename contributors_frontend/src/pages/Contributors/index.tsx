@@ -33,12 +33,20 @@ const Contributors: React.FC = () => {
         setContributors(response.data)
     }
 
+    async function deleteCollaborator(id: number){
+        await api.delete(`/collaborator/${id}`)
+    }
+
     function formateDate(date: Date){
         return moment(date).format("DD/MM/YYYY")
     }
 
     function newCollaborator () {
         history.push('/colaboradores_cadastro')
+    }
+
+    function viewCollaborator(id: number){
+        history.push(`/colaboradores/${id}`)
     }
 
     function editCollaborator(id: number){
@@ -108,8 +116,8 @@ const Contributors: React.FC = () => {
                             <td>{calcDiscount(contributors)}</td>
                             <td>
                                 <Button size="sm" onClick={ () => editCollaborator(contributors.id)}>Editar</Button>{' '}
-                                <Button size="sm" variant="info">Visualizar</Button>{' '}
-                                <Button size="sm" variant="danger">Remove</Button>{' '}
+                                <Button size="sm" variant="info" onClick={ () => viewCollaborator(contributors.id)}>Visualizar</Button>{' '}
+                                <Button size="sm" variant="danger" onClick={ () => deleteCollaborator(contributors.id)}>Remover</Button>{' '}
                             </td>
                             </tr>
                         ))
