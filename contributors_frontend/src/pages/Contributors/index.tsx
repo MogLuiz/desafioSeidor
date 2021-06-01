@@ -56,30 +56,41 @@ const Contributors: React.FC = () => {
     function calcDiscount(contributors: IContributors){
             const descPorDependente = contributors.numDependentes * 164
             var salBase = contributors.salBruto - contributors.descPrevidencia - descPorDependente
+            var desconto = 0
             
             if(salBase < 1903){
-                salBase  = 0
+                var desconto = 0 
             }
             if(salBase >= 1903 && salBase < 2826) {
-                salBase  = salBase * 0.075 
+
+                const parcelaDeduzir = 142 
+                var aliquota = salBase * 0.075
+                var desconto = aliquota - parcelaDeduzir
+                
                     
             } 
             if(salBase > 2826 && salBase < 3752){
-                salBase  = salBase * 0.15 
+                const parcelaDeduzir = 354 
+                var aliquota = salBase * 0.15
+                var desconto = aliquota - parcelaDeduzir
                 
             }
             if(salBase > 3752 && salBase < 4664){
-                 salBase  = salBase * 0.225 
+                const parcelaDeduzir = 636
+                var aliquota = salBase * 0.225 
+                var desconto = aliquota - parcelaDeduzir
                 
             }
             if(salBase > 4664){
-                 salBase = salBase * 0.275
+                const parcelaDeduzir = 869
+                var aliquota = salBase * 0.275
+                var desconto = aliquota - parcelaDeduzir
                 
             }
 
             
             
-            return salBase
+            return desconto
             
     }
 
