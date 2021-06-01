@@ -18,6 +18,7 @@ export class Contributors {
     @Column()
     descPrevidencia: number;
 
+
     @Column()
     numDependentes: number;
 
