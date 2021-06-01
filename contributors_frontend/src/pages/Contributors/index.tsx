@@ -122,7 +122,7 @@ const Contributors: React.FC = () => {
                             <td>{contributors.nome}</td>
                             <td>{contributors.cpf}</td>
                             <td>{contributors.salBruto}</td>
-                            <td></td>
+                            <td>{contributors.descPrevidencia}</td>
                             <td>{contributors.numDependentes}</td>
                             <td>{calcDiscount(contributors)}</td>
                             <td>
